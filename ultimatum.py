@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 ## Defines the class for the ultimatum game. 
 
@@ -22,6 +23,7 @@ class ultimatum:
         # Empty lists for results, rewards and payoffs are created to save the results for every episode and later access to this information
         self.player_1_actions = []
         self.player_2_actions = []
+        self.player_2_average_actions = []
         self.player_1_rewards = []
         self.player_2_rewards = []
         self.player_1_payoff = []
@@ -49,11 +51,12 @@ class ultimatum:
             reward_player_2 = player_1_action
 
         
-        self.player_1.update_qtable(action = player_1_action, reward = reward_player_1,state = player_2_action)
+        self.player_1.update_qtable(action = player_1_action, reward = reward_player_1)
         self.player_2.update_qtable(action = player_2_action, reward = reward_player_2, state = player_1_action)
         
         self.player_1_actions.append(player_1_action)
         self.player_2_actions.append(player_2_action)
+        self.player_2_average_actions.append(np.mean(self.player_2_actions))
         self.player_1_rewards.append(reward_player_1)
         self.player_2_rewards.append(reward_player_2)
         self.player_1_payoff.append(sum(self.player_1_rewards))
@@ -73,7 +76,7 @@ class ultimatum:
             self.episode()
         
         
-        self.results = pd.DataFrame(list(zip(self.player_1_actions,self.player_2_actions, self.player_1_rewards,self.player_2_rewards,self.player_1_payoff,self.player_2_payoff)),
-                        columns=["A's offer","B's action","A's reward","B's reward","A's payoffs","B's payoffs"])
+        self.results = pd.DataFrame(list(zip(self.player_1_actions,self.player_2_actions,self.player_2_average_actions, self.player_1_rewards,self.player_2_rewards,self.player_1_payoff,self.player_2_payoff)),
+                        columns=["A's offer","B's action","B's average actions","A's reward","B's reward","A's payoffs","B's payoffs"])
         
         pass
