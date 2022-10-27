@@ -1,0 +1,27 @@
+Continuar con la definición de las clases como se tienen. Luego utilizar el types.method para arreglar el método de jugada de cada jugador 2. 
+
+En el episodio pasar al método de update table toda la información del episodio, code en el jugador cómo hacer el update dependiendo de los 
+parámetros pasados. Memoria o no.   
+
+
+
+para el juego con memoria generar una nueva versión del jugador dos en donde la q_table si existe, los estados son las posibles ofertas del jugador 1, 
+pero las acciones son p: la proporción del endowment que el jugador 2 se pone como límite para decidir si acepta la propuesta del jugador 1 o no, 
+al decidir p, se toma la decisión de si se acepta la propuesta o no. Se va llenando la nueva q table y se obtiene un aprendizaje conjunto. 
+
+
+AGREGAR DECISIÓN CUANDO ES EL PRIMER EPISODIO O NO.
+
+
+ELIMINAR EL TEMA DEL DECAY RATE. NO AYUDA. EN SU LUGAR UTILIZAR DIFERENTES SIMULACIONES TENIENDO EN CUENTA DIFERENTES VALORES DE EPSILON.
+TAMBIEN AGREGAR DIFERENTES SIMULACIONES TENIENDO EN CUENTA DIFERENTES VALORES DE ALPHA.
+
+
+Estructura:
+Ejemplo del one shot game repetido. 
+Luego agregado de simulaciones con diferentes valores de EPSILON, agregado de diferentes valores de alpha.
+Pasar a nueva versión del juego con reglas fijas para verificar si el agente aprende.
+Pasar a reglas dinámicas y circulares y finalmente agregar aprendizaje mutuo. 
+
+
+realizar gráficas de los rewards para ambos jugadores.

@@ -22,13 +22,18 @@ class player_1:
             self.q_table= np.zeros(shape=(1,self.actions+1))
         pass
 
-    def move(self, state = 0): #state is 0 by default given that there is no memory by default
+    def move(self, state): #state is 0 by default given that there is no memory by default
         #greedy action
         #First, given the q table for the player and the previous state (always 0 if there is no memory and either 0 or 1 when there is memory,
         # representing the action taken by player 2 in the prev. episode). In the q table, the row representing the state is used (row 0 or 1),
         # in that row the max value is found by the function max(), the index of this value is found with the index functio.
         # The new action is set to be the index of such action (given the structure defined, the index is equal to the offer made)
         
+        if self.memory:
+            state = state
+        else:
+            state = 0
+
         strategy = np.random.random() #a random number is generated to be compared to the epsilon rate of greedy strategy
 
         if strategy > self.epsilon: # if the random number generated strategy is greater than epsilon then the greedy action is to be taken
@@ -72,7 +77,7 @@ class player_2:
             self.q_table= np.zeros(shape=(self.states+1,self.actions))
         pass
 
-    def move(self, state):
+    def move(self, state,*args,**kwargs):
         #greedy action
         #Given the state, which in this case will be the offer made by the player 1, the player will decide according to an epsilon - greedy strategy
         strategy = np.random.random()
@@ -81,7 +86,7 @@ class player_2:
             index_max_q = list(self.q_table[state]).index(max(self.q_table[state])) 
             action = index_max_q
         else: #if the strategy random number generated is not greater than epsilon, the exploring action is to be made
-            action =   np.random.randint(low = 0, high = self.actions) #one is added giben that the randint function generates an open interval        
+            action =   np.random.randint(low = 0, high = self.actions) #one is added given that the randint function generates an open interval        
         return action
 
     def update_qtable(self, action, reward,state):
