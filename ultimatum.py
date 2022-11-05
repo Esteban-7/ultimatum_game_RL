@@ -32,7 +32,7 @@ class ultimatum:
         pass
 
 
-    def episode(self):
+    def episode(self, results_b = True):
         # Defines the steps taken in each episode of the game.
         # First player 1 makes a move, meaning that he makes an offer for player 2.
         # Player 2 then accepts the offer or rejects it. 
@@ -56,14 +56,17 @@ class ultimatum:
         
         self.player_1_actions.append(player_1_action)
         self.player_2_actions.append(player_2_action)
-        self.player_2_average_actions.append(np.mean(self.player_2_actions))
+        
+        if results_b:
+            self.player_2_average_actions.append(np.mean(self.player_2_actions))
+        
         self.player_1_rewards.append(reward_player_1)
         self.player_2_rewards.append(reward_player_2)
         self.player_1_payoff.append(sum(self.player_1_rewards))
         self.player_2_payoff.append(sum(self.player_2_rewards))
         pass
 
-    def play(self, dynamic = False, policy_values = None):
+    def play(self, dynamic = False, policy_values = None, results_b = True):
         # Defines the behaviour for the game, that is, the repetitions of the episodes. 
         # If the policy is dynamic, that is, the policy for player_2 to accept (which is external) is shifting in time, the policy levels must be given as an argument.
         # For the number of episodes, an episode will be played, if the game has a dynamic policy, the value of p will be changed according to the information given. 
@@ -73,8 +76,10 @@ class ultimatum:
             if dynamic:
                 if i in policy_values.keys():
                     self.policy = policy_values[i]
-            self.episode()
-        
+            if results_b:
+                self.episode()
+            else:
+                self.episode(results_b = False)
         
         self.results = pd.DataFrame(list(zip(self.player_1_actions,self.player_2_actions,self.player_2_average_actions, self.player_1_rewards,self.player_2_rewards,self.player_1_payoff,self.player_2_payoff)),
                         columns=["A's offer","B's action","B's average actions","A's reward","B's reward","A's payoffs","B's payoffs"])
